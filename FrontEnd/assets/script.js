@@ -18,6 +18,7 @@ function displayProject(projects) {
     // Récupération du container de projets
     const projectsContainer = document.querySelector(".gallery");
 
+    // Boucle pour récupérer chaque projet dans le JSON
     projects.forEach((project) => {
         const projectElement = document.createElement("figure");
         projectElement.className = "item";
@@ -28,9 +29,9 @@ function displayProject(projects) {
         const projectTitle = document.createElement("figcaption");
         projectTitle.textContent = project.title;
 
+        // Ajout des éléments dans leur élément parent
         projectElement.appendChild(projectImage);
         projectElement.appendChild(projectTitle);
-
         projectsContainer.appendChild(projectElement);
     });
 }
