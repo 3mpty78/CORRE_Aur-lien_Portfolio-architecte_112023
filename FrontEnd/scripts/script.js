@@ -39,6 +39,8 @@ function displayProjects(projects) {
 
 listProjects();
 
+//--------- Script pour filtrer les projets -------
+
 // Définir la variable de catégorie actuelle
 let currentCategory = "Tous";
 const defaultButton = document.querySelector("button[name='Tous']");
@@ -57,27 +59,25 @@ filterButtons.forEach((button) => {
     });
 });
 
-// Fonction pour mettre à jour l'apparence des boutons de filtre
+// Fonction pour update le background du bouton sélectionné
 function updateFilterButtons(selectedButton) {
     filterButtons.forEach((button) => {
-        button.classList.remove("active"); // Supprimer la classe "active" de tous les boutons
+        button.classList.remove("active");
     });
-    selectedButton.classList.add("active"); // Ajouter la classe "active" au bouton sélectionné
+    selectedButton.classList.add("active");
 }
 
 // Fonction pour filtrer et afficher les projets en fonction de la catégorie
-// Fonction pour filtrer et afficher les projets en fonction de la catégorie
 function filterProjects() {
-    const projects = [...document.querySelectorAll(".gallery .item")]; // Sélectionner tous les projets
+    const projects = [...document.querySelectorAll(".gallery .item")];
     projects.forEach((project) => {
-        const projectCategory = project.getAttribute("data-category"); // Obtenir la catégorie du projet
+        const projectCategory = project.getAttribute("data-category");
         if (currentCategory === "Tous" || currentCategory === projectCategory) {
-            project.style.display = "block"; // Afficher le projet
+            project.style.display = "block";
         } else {
-            project.style.display = "none"; // Masquer le projet qui ne correspond pas
+            project.style.display = "none";
         }
     });
 }
 
-// Appeler la fonction de filtrage pour afficher tous les projets par défaut
 filterProjects();
