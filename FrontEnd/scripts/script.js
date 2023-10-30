@@ -8,21 +8,21 @@ const listProjects = async () => {
         const projects = await response.json();
 
         // Appel de la fonction pour afficher les projets apres fetch
-        displayProject(projects);
+        displayProjects(projects);
     } catch (error) {
         console.error(error);
     }
 };
 
 // Création de la fonction pour afficher les projets
-function displayProject(projects) {
-    // Récupération du container de projets
+function displayProjects(projects) {
     const projectsContainer = document.querySelector(".gallery");
 
     // Boucle pour récupérer chaque projet dans le JSON
     projects.forEach((project) => {
         const projectFigure = document.createElement("figure");
         projectFigure.className = "item";
+        projectFigure.setAttribute("data-category", project.category.name);
 
         const projectImage = document.createElement("img");
         projectImage.src = project.imageUrl;
@@ -66,6 +66,7 @@ function updateFilterButtons(selectedButton) {
 }
 
 // Fonction pour filtrer et afficher les projets en fonction de la catégorie
+// Fonction pour filtrer et afficher les projets en fonction de la catégorie
 function filterProjects() {
     const projects = [...document.querySelectorAll(".gallery .item")]; // Sélectionner tous les projets
     projects.forEach((project) => {
@@ -73,7 +74,7 @@ function filterProjects() {
         if (currentCategory === "Tous" || currentCategory === projectCategory) {
             project.style.display = "block"; // Afficher le projet
         } else {
-            project.style.display = "none"; // Masquer le projet
+            project.style.display = "none"; // Masquer le projet qui ne correspond pas
         }
     });
 }
