@@ -26,6 +26,7 @@ function displayProjects(projects) {
 
         const projectImage = document.createElement("img");
         projectImage.src = project.imageUrl;
+        projectImage.alt = `Image de présentation du projet : ${project.title}`;
 
         const projectTitle = document.createElement("figcaption");
         projectTitle.textContent = project.title;
@@ -53,9 +54,14 @@ const filterButtons = document.querySelectorAll(".filters button");
 // Ajouter un gestionnaire d'événement pour chaque bouton de filtre
 filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        currentCategory = button.getAttribute("name"); // Mettre à jour la catégorie actuelle
-        updateFilterButtons(button); // Mettre à jour l'apparence des boutons de filtre
-        filterProjects(); // Filtrer et afficher les projets en fonction de la catégorie
+        // Mettre à jour la catégorie actuelle
+        currentCategory = button.getAttribute("name");
+
+        // Mettre à jour l'apparence des boutons de filtre
+        updateFilterButtons(button);
+
+        // Filtrer et afficher les projets en fonction de la catégorie
+        filterProjects();
     });
 });
 
