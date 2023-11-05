@@ -21,6 +21,9 @@ loginForm.addEventListener("submit", async (event) => {
         // Traitement de la réponse si la connexion est réussie
         const data = await response.json();
         console.log(data);
+
+        // Redirection vers la page d'accueil si connexion OK
+        window.location.href = "../index.html";
     } else {
         console.error("La connexion a échoué.");
     }
