@@ -25,6 +25,7 @@ loginForm.addEventListener("submit", async (event) => {
         // Redirection vers la page d'accueil si connexion OK
         window.location.href = "../index.html";
     } else {
+        alert("Email ou mot de passe incorrect");
         console.error("La connexion a échoué.");
     }
 });
