@@ -1,0 +1,27 @@
+// Fonction pour récupérer les données des inputs (login screen)
+const loginForm = document.querySelector("form");
+
+loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    // Récupère les valeurs du nom d'utilisateur et du mot de passe
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    // Envoie les données du formulaire au serveur
+    const response = await fetch("http://localhost:5678/api/users/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+        // Traitement de la réponse si la connexion est réussie
+        const data = await response.json();
+        console.log(data);
+    } else {
+        console.error("La connexion a échoué.");
+    }
+});
