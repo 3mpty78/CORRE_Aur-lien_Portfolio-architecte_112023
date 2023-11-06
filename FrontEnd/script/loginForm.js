@@ -19,7 +19,9 @@ const login = async () => {
         // Traitement de la réponse si la connexion est réussie
         const data = await response.json();
         const token = data.token;
-        console.log(token);
+
+        // Stockage du token dans le local storage
+        window.localStorage.setItem(token);
 
         // Redirection vers la page d'accueil si connexion OK
         if (token) {
