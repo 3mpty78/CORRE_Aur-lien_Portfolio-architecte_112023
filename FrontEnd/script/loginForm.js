@@ -15,18 +15,13 @@ const login = async () => {
         body: JSON.stringify({ email, password }),
     });
 
-    if (response.ok) {
-        // Traitement de la réponse si la connexion est réussie
-        const data = await response.json();
-        const token = data.token;
+    const data = await response.json();
+    const token = data.token;
 
-        // Stockage du token dans le local storage
-        window.localStorage.setItem(token);
+    window.localStorage.setItem("token", token);
 
-        // Redirection vers la page d'accueil si connexion OK
-        if (token) {
-            window.location.href = "../index.html";
-        }
+    if (token) {
+        window.location.href = "../index.html";
     } else {
         alert("Email ou mot de passe incorrect");
         console.error("La connexion a échoué.");

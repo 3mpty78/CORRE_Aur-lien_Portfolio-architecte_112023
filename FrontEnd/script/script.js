@@ -87,3 +87,17 @@ function filterProjects() {
 }
 
 filterProjects();
+
+// Si Utilisateur connecté :
+const token = window.localStorage.getItem("token");
+
+if (token) {
+    const loginLink = document.getElementById("loginLink");
+    loginLink.innerText = "logout";
+
+    loginLink.addEventListener("click", () => {
+        window.localStorage.removeItem("token");
+        loginLink.innerText = "login";
+        console.log(token);
+    });
+}
