@@ -89,15 +89,22 @@ function filterProjects() {
 filterProjects();
 
 // Si Utilisateur connecté :
-const token = window.localStorage.getItem("token");
+const token = localStorage.getItem("token");
+const expirationTime = localStorage.getItem("expirationTime");
+const currentTime = new Date().getTime();
 
-if (token) {
+// Suppression du token et déconnexion après 24h
+if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
     const loginLink = document.getElementById("loginLink");
     loginLink.innerText = "logout";
 
     loginLink.addEventListener("click", () => {
-        window.localStorage.removeItem("token");
+        localStorage.removeItem("token");
         loginLink.innerText = "login";
         console.log(token);
     });
+} else {
+    localStorage.removeItem("token");
+    localStorage.removeItem("expirationTime");
+    loginLink.innerText = "login";
 }

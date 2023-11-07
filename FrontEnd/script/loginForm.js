@@ -18,7 +18,11 @@ const login = async () => {
     const data = await response.json();
     const token = data.token;
 
+    // Création une date d'expiration du token
+    const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000;
+
     window.localStorage.setItem("token", token);
+    window.localStorage.setItem("expirationTime", expirationTime);
 
     if (token) {
         window.location.href = "../index.html";
