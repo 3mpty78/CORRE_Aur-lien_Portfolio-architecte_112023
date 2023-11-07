@@ -88,23 +88,46 @@ function filterProjects() {
 
 filterProjects();
 
+//--------- Script pour modifier le contenu du portfolio -------
 // Si Utilisateur connecté :
 const token = localStorage.getItem("token");
 const expirationTime = localStorage.getItem("expirationTime");
 const currentTime = new Date().getTime();
 
-// Suppression du token et déconnexion après 24h
 if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
+    // Modification de la Nav
     const loginLink = document.getElementById("loginLink");
-    loginLink.innerText = "logout";
+    loginLink.textContent = "logout";
 
     loginLink.addEventListener("click", () => {
         localStorage.removeItem("token");
-        loginLink.innerText = "login";
+        loginLink.textContent = "login";
         console.log(token);
     });
+
+    // Retrait des filtres
+    const filterContainer = document.querySelector(".filters");
+    filterContainer.style.visibility = "hidden";
+
+    // ---- Ajout du lien pour modifier les projets ----
+    // Récupération de la section portfolio
+    const portfolioTitle = document.querySelector("#portfolio h2");
+
+    // Création des éléments nécessaires
+    const modificationIcon = document.createElement("img");
+    const modificationLink = document.createElement("a");
+
+    modificationIcon.src = "./assets/icons/update.png";
+
+    modificationLink.setAttribute("href", "#");
+    modificationLink.className = "modifier";
+    modificationLink.textContent = "Modifier";
+
+    // Ajout du lien dans la page
+    modificationLink.appendChild(modificationIcon);
+    portfolioTitle.appendChild(modificationLink);
 } else {
     localStorage.removeItem("token");
     localStorage.removeItem("expirationTime");
-    loginLink.innerText = "login";
+    loginLink.textContent = "login";
 }
