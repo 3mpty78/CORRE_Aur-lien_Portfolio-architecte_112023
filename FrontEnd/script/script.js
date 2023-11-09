@@ -88,13 +88,21 @@ function filterProjects() {
 
 filterProjects();
 
-//--------- Script pour modifier le contenu du portfolio -------
+//------- Script pour modifier le contenu du portfolio -------
 // Si Utilisateur connecté :
 const token = localStorage.getItem("token");
 const expirationTime = localStorage.getItem("expirationTime");
 const currentTime = new Date().getTime();
 
 if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
+    // Ajout et retrait du bandeau édition
+    const editionBanner = document.querySelector(".edition_banner");
+    editionBanner.classList.add("visible");
+
+    // Affichage de la modal de management
+    // const managementModal = document.querySelector(".overlay");
+    // managementModal.classList.add("visible");
+
     // Modification de la Nav
     const loginLink = document.getElementById("loginLink");
     loginLink.textContent = "logout";
@@ -130,4 +138,5 @@ if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
     localStorage.removeItem("token");
     localStorage.removeItem("expirationTime");
     loginLink.textContent = "login";
+    editionBanner.classList.remove("visible");
 }

@@ -130,10 +130,28 @@ table {
 /** end reset css**/
 body {
     max-width: 1140px;
-    margin: auto;
+    margin: 0 auto;
     font-family: "Work Sans";
     font-size: 14px;
     background: #fffef8;
+}
+.edition_banner.visible {
+    height: 60px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.edition_banner img {
+    width: 15px;
+    filter: invert(1);
+}
+.edition_banner p {
+    color: white;
+}
+.edition_banner {
+    display: none;
 }
 header {
     display: flex;
@@ -349,4 +367,26 @@ footer nav ul {
     display: flex;
     justify-content: flex-end;
     margin: 2em;
+}
+
+/* Overlay management modal */
+
+.overlay.visible {
+    position: fixed;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: brightness(0.5);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.overlay .managementModal {
+    background: white;
+    width: 50%;
+}
+.overlay {
+    display: none;
 }
