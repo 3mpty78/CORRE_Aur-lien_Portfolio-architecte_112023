@@ -383,9 +383,58 @@ footer nav ul {
     align-items: center;
     justify-content: center;
 }
-.overlay .managementModal {
+.managementModal {
     background: white;
     width: 50%;
+    height: auto;
+    position: relative;
+    padding: 60px 0 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+}
+.managementModal .crossIcon {
+    width: 24px;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+.managementModal h3 {
+    font-size: 26px;
+    font-weight: 400;
+    width: fit-content;
+    margin: 0 auto;
+}
+.modalGallery {
+    width: 75%;
+    overflow-y: scroll;
+    margin: 0 auto;
+    margin-top: 45px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 20px;
+}
+.modalGallery figure {
+    position: relative;
+    width: 100%;
+}
+.modalGallery img {
+    width: 100%;
+}
+.trashContainer {
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    background: black;
+    border-radius: 2px;
+}
+.trashContainer img {
+    width: 15px;
+    filter: invert(1);
 }
 .overlay {
     display: none;

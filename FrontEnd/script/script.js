@@ -9,6 +9,7 @@ const listProjects = async () => {
 
         // Appel de la fonction pour afficher les projets apres fetch
         displayProjects(projects);
+        updateProjects(projects);
     } catch (error) {
         console.error(error);
     }
@@ -95,13 +96,42 @@ const expirationTime = localStorage.getItem("expirationTime");
 const currentTime = new Date().getTime();
 
 if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
+    // ---- Déjà : récupérer les images des projets ----
+
+    // Fonction pour afficher les projets fetch
+    function updateProjects(projects) {
+        const projectsContainer = document.querySelector(".modalGallery");
+        // Boucle pour récupérer chaque projet dans le JSON
+        projects.forEach((project) => {
+            const projectFigure = document.createElement("figure");
+
+            const projectImage = document.createElement("img");
+            projectImage.src = project.imageUrl;
+            projectImage.alt = `Image de présentation du projet : ${project.title}`;
+
+            const trashIcon = document.createElement("img");
+            trashIcon.src = "./assets/icons/trash.svg";
+            trashIcon.alt = "icone de suppression";
+            trashIcon.className = "trash";
+
+            const trashContainer = document.createElement("div");
+            trashContainer.className = "trashContainer";
+
+            trashContainer.appendChild(trashIcon);
+            projectFigure.appendChild(projectImage);
+            projectFigure.appendChild(trashContainer);
+            projectsContainer.appendChild(projectFigure);
+        });
+    }
+
+    // ---- Modification de la page ----
+
     // Ajout et retrait du bandeau édition
     const editionBanner = document.querySelector(".edition_banner");
     editionBanner.classList.add("visible");
 
     // Affichage de la modal de management
-    // const managementModal = document.querySelector(".overlay");
-    // managementModal.classList.add("visible");
+    const managementModal = document.querySelector(".overlay");
 
     // Modification de la Nav
     const loginLink = document.getElementById("loginLink");
@@ -113,11 +143,12 @@ if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
         console.log(token);
     });
 
-    // Retrait des filtres
+    // Retrait des boutons de filtres
     const filterContainer = document.querySelector(".filters");
     filterContainer.style.visibility = "hidden";
 
     // ---- Ajout du lien pour modifier les projets ----
+
     // Récupération de la section portfolio
     const portfolioTitle = document.querySelector("#portfolio h2");
 
@@ -134,6 +165,18 @@ if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
     // Ajout du lien dans la page
     modificationLink.appendChild(modificationIcon);
     portfolioTitle.appendChild(modificationLink);
+
+    // Afficher de la modale de modification
+    modificationLink.addEventListener("click", () => {
+        managementModal.classList.add("visible");
+    });
+
+    // Masquer la modale de modification
+    const crossIcon = document.querySelector(".crossIcon");
+    crossIcon.addEventListener("click", () => {
+        managementModal.classList.remove("visible");
+    });
+    //
 } else {
     localStorage.removeItem("token");
     localStorage.removeItem("expirationTime");
