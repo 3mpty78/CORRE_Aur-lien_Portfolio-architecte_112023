@@ -386,7 +386,7 @@ footer nav ul {
 .managementModal {
     background: white;
     width: 50%;
-    height: auto;
+    height: 75%;
     position: relative;
     padding: 60px 0 45px;
     display: flex;
@@ -399,6 +399,7 @@ footer nav ul {
     position: absolute;
     right: 30px;
     top: 30px;
+    cursor: pointer;
 }
 .managementModal h3 {
     font-size: 26px;
@@ -414,7 +415,7 @@ footer nav ul {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-column-gap: 10px;
-    grid-row-gap: 20px;
+    grid-row-gap: 25px;
 }
 .modalGallery figure {
     position: relative;
@@ -430,11 +431,32 @@ footer nav ul {
     right: 10px;
     z-index: 1;
     background: black;
-    border-radius: 2px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .trashContainer img {
     width: 15px;
     filter: invert(1);
+}
+.divider {
+    width: 75%;
+    height: 1px;
+    background: #b3b3b3;
+    margin: 60px auto 38px;
+}
+.managementModal button {
+    width: fit-content;
+    margin: 0 auto;
+    outline: none;
+    border: 1px solid #1d6154;
+    background: #1d6154;
+    color: white;
+    padding: 10px 50px;
+    min-width: 100px;
+    border-radius: 60px;
+    font-weight: 700;
+    font-family: Syne;
+    cursor: pointer;
 }
 .overlay {
     display: none;

@@ -90,14 +90,13 @@ function filterProjects() {
 filterProjects();
 
 //------- Script pour modifier le contenu du portfolio -------
+
 // Si Utilisateur connecté :
 const token = localStorage.getItem("token");
 const expirationTime = localStorage.getItem("expirationTime");
 const currentTime = new Date().getTime();
 
 if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
-    // ---- Déjà : récupérer les images des projets ----
-
     // Fonction pour afficher les projets fetch
     function updateProjects(projects) {
         const projectsContainer = document.querySelector(".modalGallery");
@@ -116,16 +115,33 @@ if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
 
             const trashContainer = document.createElement("div");
             trashContainer.className = "trashContainer";
+            trashContainer.setAttribute("data-project-id", project.id);
+            // Suppression d'un projet
+            trashContainer.addEventListener("click", () =>
+                handleDelete(project.id)
+            );
 
             trashContainer.appendChild(trashIcon);
             projectFigure.appendChild(projectImage);
             projectFigure.appendChild(trashContainer);
             projectsContainer.appendChild(projectFigure);
         });
+
+        // Appel de la fonction pour gérer le layout
+        createLoggedLayout();
     }
+} else {
+    // Gestion du localStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("expirationTime");
 
-    // ---- Modification de la page ----
+    // Gestion de l'affichage
+    loginLink.textContent = "login";
+    editionBanner.classList.remove("visible");
+}
 
+// Fonction pour créer le layout si connecté
+function createLoggedLayout() {
     // Ajout et retrait du bandeau édition
     const editionBanner = document.querySelector(".edition_banner");
     editionBanner.classList.add("visible");
@@ -176,10 +192,31 @@ if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
     crossIcon.addEventListener("click", () => {
         managementModal.classList.remove("visible");
     });
-    //
-} else {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expirationTime");
-    loginLink.textContent = "login";
-    editionBanner.classList.remove("visible");
+}
+
+// Fonction pour supprimer un projet
+async function handleDelete(projectId) {
+    try {
+        const response = await fetch(
+            `http://localhost:5678/api/works/${projectId}`,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Erreur : ${response.status}`);
+        }
+        const projectElement = document.querySelector(
+            `[data-project-id="${projectId}"]`
+        );
+        if (projectElement) {
+            projectElement.remove();
+        }
+    } catch (error) {
+        console.error(error);
+    }
 }
