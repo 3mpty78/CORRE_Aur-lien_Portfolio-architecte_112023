@@ -1,72 +1,92 @@
-// Création du fetch pour récupérer les projets
-const listProjects = async () => {
+import deleteProject from "./deleteProject.js";
+
+// Variables globales
+let currentCategory = "Tous";
+const filterButtons = document.querySelectorAll(".filters button");
+const defaultButton = document.querySelector("button[name='Tous']");
+const token = localStorage.getItem("token");
+const expirationTime = localStorage.getItem("expirationTime");
+const currentTime = new Date().getTime();
+
+// Fonction pour effectuer le fetch des projets
+const fetchProjects = async () => {
     try {
         const response = await fetch("http://localhost:5678/api/works");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const projects = await response.json();
-
-        // Appel de la fonction pour afficher les projets apres fetch
-        displayProjects(projects);
-        updateProjects(projects);
+        return await response.json();
     } catch (error) {
         console.error(error);
+        return [];
     }
 };
 
-// Création de la fonction pour afficher les projets
-function displayProjects(projects) {
-    const projectsContainer = document.querySelector(".gallery");
+// Fonction pour créer un élément figure de projet
+function createProjectFigure(project) {
+    const projectFigure = document.createElement("figure");
+    projectFigure.className = "item";
+    projectFigure.setAttribute("data-category", project.category.name);
 
-    // Boucle pour récupérer chaque projet dans le JSON
+    const projectImage = document.createElement("img");
+    projectImage.src = project.imageUrl;
+    projectImage.alt = `Image de présentation du projet : ${project.title}`;
+
+    const projectTitle = document.createElement("figcaption");
+    projectTitle.textContent = project.title;
+
+    projectFigure.appendChild(projectImage);
+    projectFigure.appendChild(projectTitle);
+
+    return projectFigure;
+}
+
+// Fonction pour mettre à jour l'affichage des projets
+function updateProjectsDisplay(
+    projects,
+    containerSelector,
+    addTrashIcon = false
+) {
+    const projectsContainer = document.querySelector(containerSelector);
+
+    // Vider le contenu actuel du conteneur
+    projectsContainer.innerHTML = "";
+
     projects.forEach((project) => {
-        const projectFigure = document.createElement("figure");
-        projectFigure.className = "item";
-        projectFigure.setAttribute("data-category", project.category.name);
+        const projectFigure = createProjectFigure(project);
 
-        const projectImage = document.createElement("img");
-        projectImage.src = project.imageUrl;
-        projectImage.alt = `Image de présentation du projet : ${project.title}`;
+        if (addTrashIcon) {
+            const trashIcon = document.createElement("img");
+            trashIcon.src = "./assets/icons/trash.svg";
+            trashIcon.alt = "icone de suppression";
+            trashIcon.className = "trash";
 
-        const projectTitle = document.createElement("figcaption");
-        projectTitle.textContent = project.title;
+            const trashContainer = document.createElement("div");
+            trashContainer.className = "trashContainer";
+            trashContainer.setAttribute("data-project-id", project.id);
 
-        // Ajout des éléments dans leur élément parent
-        projectFigure.appendChild(projectImage);
-        projectFigure.appendChild(projectTitle);
+            trashContainer.addEventListener("click", () =>
+                handleDeleteProject(project.id)
+            );
+
+            trashContainer.appendChild(trashIcon);
+            projectFigure.appendChild(trashContainer);
+        }
+
         projectsContainer.appendChild(projectFigure);
     });
 }
 
-listProjects();
+// Fonction pour gérer les filtres
+function handleFilterButtonClick(event) {
+    const selectedButton = event.target;
+    currentCategory = selectedButton.getAttribute("name");
 
-//--------- Script pour filtrer les projets -------
+    updateFilterButtons(selectedButton);
+    filterProjects();
+}
 
-// Définir la variable de catégorie actuelle
-let currentCategory = "Tous";
-const defaultButton = document.querySelector("button[name='Tous']");
-
-defaultButton.classList.add("active");
-
-// Sélectionner les boutons de filtre
-const filterButtons = document.querySelectorAll(".filters button");
-
-// Ajouter un gestionnaire d'événement pour chaque bouton de filtre
-filterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        // Mettre à jour la catégorie actuelle
-        currentCategory = button.getAttribute("name");
-
-        // Mettre à jour l'apparence des boutons de filtre
-        updateFilterButtons(button);
-
-        // Filtrer et afficher les projets en fonction de la catégorie
-        filterProjects();
-    });
-});
-
-// Fonction pour update le background du bouton sélectionné
+// Fonction pour mettre à jour l'apparence des boutons de filtre
 function updateFilterButtons(selectedButton) {
     filterButtons.forEach((button) => {
         button.classList.remove("active");
@@ -74,7 +94,7 @@ function updateFilterButtons(selectedButton) {
     selectedButton.classList.add("active");
 }
 
-// Fonction pour filtrer et afficher les projets en fonction de la catégorie
+// Fonction pour filtrer les projets en fonction de la catégorie
 function filterProjects() {
     const projects = [...document.querySelectorAll(".gallery .item")];
     projects.forEach((project) => {
@@ -87,69 +107,43 @@ function filterProjects() {
     });
 }
 
-filterProjects();
+// Fonction principale pour charger et afficher les projets
+const listProjects = async () => {
+    const projects = await fetchProjects();
 
-//------- Script pour modifier le contenu du portfolio -------
+    displayProjects(projects);
+    updateProjects(projects);
+    filterProjects();
+};
 
-// Si Utilisateur connecté :
-const token = localStorage.getItem("token");
-const expirationTime = localStorage.getItem("expirationTime");
-const currentTime = new Date().getTime();
+// Fonction pour afficher les projets
+function displayProjects(projects) {
+    const projectsContainer = document.querySelector(".gallery");
 
-if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
-    // Fonction pour afficher les projets fetch
-    function updateProjects(projects) {
-        const projectsContainer = document.querySelector(".modalGallery");
-        // Boucle pour récupérer chaque projet dans le JSON
-        projects.forEach((project) => {
-            const projectFigure = document.createElement("figure");
+    projects.forEach((project) => {
+        const projectFigure = createProjectFigure(project);
+        projectsContainer.appendChild(projectFigure);
+    });
+}
 
-            const projectImage = document.createElement("img");
-            projectImage.src = project.imageUrl;
-            projectImage.alt = `Image de présentation du projet : ${project.title}`;
-
-            const trashIcon = document.createElement("img");
-            trashIcon.src = "./assets/icons/trash.svg";
-            trashIcon.alt = "icone de suppression";
-            trashIcon.className = "trash";
-
-            const trashContainer = document.createElement("div");
-            trashContainer.className = "trashContainer";
-            trashContainer.setAttribute("data-project-id", project.id);
-            // Suppression d'un projet
-            trashContainer.addEventListener("click", () =>
-                handleDelete(project.id)
-            );
-
-            trashContainer.appendChild(trashIcon);
-            projectFigure.appendChild(projectImage);
-            projectFigure.appendChild(trashContainer);
-            projectsContainer.appendChild(projectFigure);
-        });
-
-        // Appel de la fonction pour gérer le layout
+// Fonction pour mettre à jour l'affichage des projets connectés
+function updateProjects(projects) {
+    if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
+        updateProjectsDisplay(projects, ".modalGallery", true);
         createLoggedLayout();
+    } else {
+        localStorage.removeItem("token");
+        localStorage.removeItem("expirationTime");
+        loginLink.textContent = "login";
+        editionBanner.classList.remove("visible");
     }
-} else {
-    // Gestion du localStorage
-    localStorage.removeItem("token");
-    localStorage.removeItem("expirationTime");
-
-    // Gestion de l'affichage
-    loginLink.textContent = "login";
-    editionBanner.classList.remove("visible");
 }
 
 // Fonction pour créer le layout si connecté
 function createLoggedLayout() {
-    // Ajout et retrait du bandeau édition
     const editionBanner = document.querySelector(".edition_banner");
     editionBanner.classList.add("visible");
 
-    // Affichage de la modal de management
-    const managementModal = document.querySelector(".overlay");
-
-    // Modification de la Nav
     const loginLink = document.getElementById("loginLink");
     loginLink.textContent = "logout";
 
@@ -159,64 +153,53 @@ function createLoggedLayout() {
         console.log(token);
     });
 
-    // Retrait des boutons de filtres
     const filterContainer = document.querySelector(".filters");
     filterContainer.style.visibility = "hidden";
 
-    // ---- Ajout du lien pour modifier les projets ----
-
-    // Récupération de la section portfolio
     const portfolioTitle = document.querySelector("#portfolio h2");
 
-    // Création des éléments nécessaires
     const modificationIcon = document.createElement("img");
     const modificationLink = document.createElement("a");
 
     modificationIcon.src = "./assets/icons/update.png";
-
     modificationLink.setAttribute("href", "#");
     modificationLink.className = "modifier";
     modificationLink.textContent = "Modifier";
 
-    // Ajout du lien dans la page
     modificationLink.appendChild(modificationIcon);
     portfolioTitle.appendChild(modificationLink);
 
-    // Afficher de la modale de modification
     modificationLink.addEventListener("click", () => {
+        const managementModal = document.querySelector(".overlay");
         managementModal.classList.add("visible");
     });
 
-    // Masquer la modale de modification
     const crossIcon = document.querySelector(".crossIcon");
     crossIcon.addEventListener("click", () => {
+        const managementModal = document.querySelector(".overlay");
         managementModal.classList.remove("visible");
     });
 }
 
 // Fonction pour supprimer un projet
-async function handleDelete(projectId) {
-    try {
-        const response = await fetch(
-            `http://localhost:5678/api/works/${projectId}`,
-            {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
+async function handleDeleteProject(projectId) {
+    const deletionSuccessful = await deleteProject(projectId, token);
 
-        if (!response.ok) {
-            throw new Error(`Erreur : ${response.status}`);
-        }
+    if (deletionSuccessful) {
         const projectElement = document.querySelector(
             `[data-project-id="${projectId}"]`
         );
         if (projectElement) {
             projectElement.remove();
         }
-    } catch (error) {
-        console.error(error);
     }
 }
+
+// Gestion des événements pour les boutons de filtre
+defaultButton.classList.add("active");
+filterButtons.forEach((button) => {
+    button.addEventListener("click", handleFilterButtonClick);
+});
+
+// Appel de la fonction principale pour charger les projets
+listProjects();
