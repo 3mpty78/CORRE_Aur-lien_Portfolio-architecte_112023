@@ -179,6 +179,27 @@ function createLoggedLayout() {
         const managementModal = document.querySelector(".overlay");
         managementModal.classList.remove("visible");
     });
+
+    // Changement de modal
+    function updateModalDisplay() {
+        // Sélection de la nouvelle modale
+        const addPhotoModal = document.querySelector(".addPhoto");
+        addPhotoModal.classList.add("displayed");
+
+        // Masque la modale précédente
+        const modalGallery = document.querySelector(".modalGallery");
+        modalGallery.style.display = "none";
+
+        // Changer le texte du titre
+        const title = document.querySelector(".managementModal h3");
+        title.textContent = "Ajout photo";
+
+        // Nouveau style du bouton
+        addPhotoBtn.textContent = "Valider";
+        addPhotoBtn.setAttribute("disabled", true);
+    }
+    const addPhotoBtn = document.querySelector("button[name='ajouter']");
+    addPhotoBtn.addEventListener("click", updateModalDisplay);
 }
 
 // Fonction pour supprimer un projet

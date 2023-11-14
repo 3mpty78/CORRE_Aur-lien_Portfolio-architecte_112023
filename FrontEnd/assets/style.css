@@ -458,6 +458,68 @@ footer nav ul {
     font-family: Syne;
     cursor: pointer;
 }
+.managementModal button:disabled {
+    background: #a7a7a7;
+
+    color: white;
+    border: none;
+}
 .overlay {
+    display: none;
+}
+
+.addPhoto {
+    display: none;
+}
+.addPhoto.displayed {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    & .addContainer {
+        width: 75%;
+        height: auto;
+        margin-top: 20px;
+        background: #e8f1f6;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 3px;
+        padding: 20px 0;
+        gap: 6px;
+
+        & .addFile {
+            background: #cbd6dc;
+            color: #306685;
+            padding: 10px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+    }
+
+    & .textContainer {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        margin-top: 30px;
+        gap: 10px;
+
+        & label {
+            margin-top: 10px;
+        }
+
+        & input {
+            height: 50px;
+            padding: 0;
+        }
+        & select {
+            height: 50px;
+        }
+    }
+}
+
+input[type="file"] {
     display: none;
 }

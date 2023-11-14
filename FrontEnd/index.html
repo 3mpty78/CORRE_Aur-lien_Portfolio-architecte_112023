@@ -33,29 +33,35 @@
                         <img
                             src="./assets/icons/picture.png"
                             alt="Icone d'image" />
+                        <label class="addFile" for="addFile"
+                            >+ Ajouter photo</label
+                        >
                         <input
                             required
+                            id="addFile"
                             type="file"
                             name="addPicture"
-                            value="+ Ajouter une photo" />
+                            accept=".png, .jpg, .jpeg" />
                         <p>jpg, png : 4mo max</p>
                     </div>
-                    <label for="title">Titre</label>
-                    <input required type="text" name="title" />
-                    <label for="category">Catégorie</label>
-                    <select required name="category" id="category">
-                        <option value=""></option>
-                        <option value="Objets">Objets</option>
-                        <option value="Hôtels et restaurants">
-                            Hôtels et restaurants
-                        </option>
-                        <option value="Appartements">Appartements</option>
-                    </select>
+                    <div class="textContainer">
+                        <label for="title">Titre</label>
+                        <input required type="text" name="title" />
+                        <label for="category">Catégorie</label>
+                        <select required name="category" id="category">
+                            <option value=""></option>
+                            <option value="Objets">Objets</option>
+                            <option value="Hôtels et restaurants">
+                                Hôtels et restaurants
+                            </option>
+                            <option value="Appartements">Appartements</option>
+                        </select>
+                    </div>
                 </div>
                 <!--  -->
 
                 <span class="divider"></span>
-                <button name="Objets" type="button">Ajouter une photo</button>
+                <button name="ajouter" type="button">Ajouter une photo</button>
             </div>
         </section>
 
