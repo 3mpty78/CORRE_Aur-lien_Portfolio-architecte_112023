@@ -7,6 +7,9 @@ const defaultButton = document.querySelector("button[name='Tous']");
 const token = localStorage.getItem("token");
 const expirationTime = localStorage.getItem("expirationTime");
 const currentTime = new Date().getTime();
+const addPhotoModal = document.querySelector(".addPhoto");
+const modalGallery = document.querySelector(".modalGallery");
+const title = document.querySelector(".managementModal h3");
 
 // Fonction pour effectuer le fetch des projets
 const fetchProjects = async () => {
@@ -175,28 +178,36 @@ function createLoggedLayout() {
     });
 
     const crossIcon = document.querySelector(".crossIcon");
+    const goBack = document.querySelector(".goBack");
+
     crossIcon.addEventListener("click", () => {
         const managementModal = document.querySelector(".overlay");
         managementModal.classList.remove("visible");
     });
 
+    goBack.style.display = "none";
+
     // Changement de modal
     function updateModalDisplay() {
         // Sélection de la nouvelle modale
-        const addPhotoModal = document.querySelector(".addPhoto");
         addPhotoModal.classList.add("displayed");
-
         // Masque la modale précédente
-        const modalGallery = document.querySelector(".modalGallery");
         modalGallery.style.display = "none";
-
         // Changer le texte du titre
-        const title = document.querySelector(".managementModal h3");
         title.textContent = "Ajout photo";
+        // Affiche l'icone de retour arrière
+        goBack.style.display = "block";
+        goBack.addEventListener("click", () => {
+            addPhotoModal.classList.remove("displayed");
+            modalGallery.style.display = "grid";
+            addPhotoBtn.textContent = "Ajouter une photo";
+            addPhotoBtn.toggleAttribute("disabled", false);
+            goBack.style.display = "none";
+        });
 
         // Nouveau style du bouton
         addPhotoBtn.textContent = "Valider";
-        addPhotoBtn.setAttribute("disabled", true);
+        addPhotoBtn.setAttribute(`disabled`, true);
     }
     const addPhotoBtn = document.querySelector("button[name='ajouter']");
     addPhotoBtn.addEventListener("click", updateModalDisplay);

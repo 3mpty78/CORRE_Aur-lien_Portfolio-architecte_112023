@@ -394,13 +394,19 @@ footer nav ul {
     justify-content: center;
     border-radius: 10px;
 }
-.managementModal .crossIcon {
+.managementModal .crossIcon,
+.goBack {
     width: 24px;
     position: absolute;
     right: 30px;
     top: 30px;
     cursor: pointer;
 }
+
+.goBack {
+    left: 30px;
+}
+
 .managementModal h3 {
     font-size: 26px;
     font-weight: 400;
@@ -511,11 +517,12 @@ footer nav ul {
         }
 
         & input {
-            height: 50px;
-            padding: 0;
+            height: auto;
+            padding: 15px;
         }
         & select {
-            height: 50px;
+            height: auto;
+            padding: 15px;
         }
     }
 }
