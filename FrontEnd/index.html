@@ -27,9 +27,15 @@
                     class="goBack" />
                 <h3>Galerie photo</h3>
 
-                <!-- Conteneur de photos -->
-                <div class="modalGallery"></div>
-                <!--  -->
+                <div class="preview">
+                    <!-- Conteneur de photos -->
+                    <div class="modalGallery"></div>
+                    <!--  -->
+                    <span class="divider"></span>
+                    <button name="ajouter" type="button" id="submitButton">
+                        Ajouter une photo
+                    </button>
+                </div>
 
                 <!-- Modal ajout de photo -->
                 <div class="addPhoto">
@@ -51,7 +57,7 @@
                     </div>
                     <div class="textContainer">
                         <label for="title">Titre</label>
-                        <input required type="text" name="title" />
+                        <input required type="text" name="title" id="title" />
                         <label for="category">Catégorie</label>
                         <select required name="category" id="category">
                             <option value=""></option>
@@ -62,11 +68,13 @@
                             <option value="Appartements">Appartements</option>
                         </select>
                     </div>
+
+                    <span class="divider"></span>
+                    <button name="ajouter" type="button" id="submitButton">
+                        Ajouter une photo
+                    </button>
                 </div>
                 <!--  -->
-
-                <span class="divider"></span>
-                <button name="ajouter" type="button">Ajouter une photo</button>
             </div>
         </section>
 

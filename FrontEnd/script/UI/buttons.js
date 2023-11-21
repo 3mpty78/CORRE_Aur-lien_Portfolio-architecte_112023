@@ -1,6 +1,7 @@
 // Fonction pour gérer les filtres
 let currentCategory = "Tous";
 const filterButtons = document.querySelectorAll(".filters button");
+const defaultButton = document.querySelector("button[name='Tous']");
 
 function handleFilterButtonClick(event) {
     const selectedButton = event.target;
@@ -31,4 +32,10 @@ function filterProjects() {
     });
 }
 
-export default { filterProjects, handleFilterButtonClick };
+// Gestion des événements pour les boutons de filtre
+defaultButton.classList.add("active");
+filterButtons.forEach((button) => {
+    button.addEventListener("click", handleFilterButtonClick);
+});
+
+export default filterProjects;
