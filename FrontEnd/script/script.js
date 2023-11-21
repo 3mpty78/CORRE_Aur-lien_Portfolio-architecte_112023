@@ -44,7 +44,7 @@ function displayProjects(projects) {
     });
 }
 
-// Fonction pour mettre à jour l'affichage des projets connectés
+// Fonction pour mettre à jour l'affichage des projets quand t'es connecté
 function updateProjects(projects) {
     if (token && expirationTime && currentTime <= parseInt(expirationTime)) {
         updateProjectsDisplay(projects, ".modalGallery", true);

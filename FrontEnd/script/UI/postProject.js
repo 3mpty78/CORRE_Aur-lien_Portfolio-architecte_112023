@@ -26,7 +26,7 @@ async function fetchCatgories() {
         return [];
     }
 }
-
+// Lister les catégorties dans mon select
 function pushCategories(categories) {
     const emptyOption = document.createElement("option");
     emptyOption.value = "";
@@ -69,7 +69,7 @@ async function postProject(event) {
             throw new Error(`Erreur HTTP : ${response.status}`);
         }
 
-        alert("Projet envoyé ! ✅");
+        alert("Projet posté ! enfiiiiin ! ✅");
     } catch (error) {
         console.error("Erreur lors de l'envoie du projet : ", error);
     }

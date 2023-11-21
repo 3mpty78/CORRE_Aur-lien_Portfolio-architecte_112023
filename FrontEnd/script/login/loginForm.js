@@ -1,3 +1,6 @@
+const h1 = document.querySelector("h1");
+h1.addEventListener("click", () => (window.location.href = "../index.html"));
+
 // Fonction pour récupérer les données des inputs (login screen)
 const loginForm = document.querySelector("form");
 
