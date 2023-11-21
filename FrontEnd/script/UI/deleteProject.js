@@ -21,4 +21,18 @@ async function deleteProject(projectId, token) {
     }
 }
 
-export default deleteProject;
+// Fonction pour supprimer un projet
+async function handleDeleteProject(projectId) {
+    const deletionSuccessful = await deleteProject(projectId, token);
+
+    if (deletionSuccessful) {
+        const projectElement = document.querySelector(
+            `[data-project-id="${projectId}"]`
+        );
+        if (projectElement) {
+            projectElement.remove();
+        }
+    }
+}
+
+export default handleDeleteProject;
