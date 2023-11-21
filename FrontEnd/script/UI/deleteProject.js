@@ -1,4 +1,7 @@
 // Fonction pour supprimer un projet
+
+const token = localStorage.getItem("token");
+
 async function deleteProject(projectId, token) {
     try {
         const response = await fetch(

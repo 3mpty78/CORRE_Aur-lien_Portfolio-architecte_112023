@@ -32,7 +32,7 @@
                     <div class="modalGallery"></div>
                     <!--  -->
                     <span class="divider"></span>
-                    <button name="ajouter" type="button" id="submitButton">
+                    <button name="ajouter" type="button">
                         Ajouter une photo
                     </button>
                 </div>
@@ -41,7 +41,7 @@
                 <div class="addPhoto">
                     <div class="addContainer">
                         <img
-                            id="projetPicture"
+                            id="projectPicture"
                             src="./assets/icons/picture.png"
                             alt="Icone d'image" />
                         <label class="addFile" for="addFile"
@@ -59,18 +59,15 @@
                         <label for="title">Titre</label>
                         <input required type="text" name="title" id="title" />
                         <label for="category">Catégorie</label>
-                        <select required name="category" id="category">
-                            <option value=""></option>
-                            <option value="Objets">Objets</option>
-                            <option value="Hôtels et restaurants">
-                                Hôtels et restaurants
-                            </option>
-                            <option value="Appartements">Appartements</option>
-                        </select>
+                        <select required name="category" id="category"></select>
                     </div>
 
                     <span class="divider"></span>
-                    <button name="ajouter" type="button" id="submitButton">
+                    <button
+                        disabled
+                        name="post"
+                        type="button"
+                        id="submitButton">
                         Ajouter une photo
                     </button>
                 </div>

@@ -501,6 +501,12 @@ footer nav ul {
         padding: 20px 0;
         gap: 6px;
 
+        & img {
+            width: 100px;
+            height: 100%;
+            object-fit: contain;
+        }
+
         & .addFile {
             background: #cbd6dc;
             color: #306685;
@@ -534,4 +540,10 @@ footer nav ul {
 
 input[type="file"] {
     display: none;
+}
+
+button[name="post"]:disabled {
+    background: #a7a7a7;
+    color: white;
+    border: none;
 }

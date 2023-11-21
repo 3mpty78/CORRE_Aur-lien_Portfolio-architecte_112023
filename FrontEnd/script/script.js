@@ -8,7 +8,6 @@ const token = localStorage.getItem("token");
 const expirationTime = localStorage.getItem("expirationTime");
 const currentTime = new Date().getTime();
 const addPhotoModal = document.querySelector(".addPhoto");
-const modalGallery = document.querySelector(".modalGallery");
 const title = document.querySelector(".managementModal h3");
 const editionBanner = document.querySelector(".edition_banner");
 
