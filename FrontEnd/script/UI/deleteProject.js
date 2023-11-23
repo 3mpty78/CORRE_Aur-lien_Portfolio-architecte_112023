@@ -25,7 +25,8 @@ async function deleteProject(projectId, token) {
 }
 
 // Fonction pour supprimer un projet
-async function handleDeleteProject(projectId) {
+async function handleDeleteProject(event, projectId) {
+    event.preventDefault();
     const deletionSuccessful = await deleteProject(projectId, token);
 
     if (deletionSuccessful) {
