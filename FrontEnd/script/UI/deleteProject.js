@@ -17,10 +17,8 @@ async function deleteProject(projectId, token) {
         if (!response.ok) {
             throw new Error(`Erreur : ${response.status}`);
         }
-        return true;
     } catch (error) {
         console.error(error);
-        return false;
     }
 }
 

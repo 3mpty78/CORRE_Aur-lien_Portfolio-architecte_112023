@@ -68,8 +68,6 @@ async function postProject(event) {
         if (!response.ok) {
             throw new Error(`Erreur HTTP : ${response.status}`);
         }
-
-        alert("Projet posté ! enfiiiiin ! ✅");
     } catch (error) {
         console.error("Erreur lors de l'envoie du projet : ", error);
     }
