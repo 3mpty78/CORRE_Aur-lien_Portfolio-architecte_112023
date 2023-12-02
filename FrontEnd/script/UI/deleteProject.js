@@ -1,5 +1,4 @@
 // Fonction pour supprimer un projet
-
 const token = localStorage.getItem("token");
 
 async function deleteProject(projectId, token) {
@@ -17,14 +16,15 @@ async function deleteProject(projectId, token) {
         if (!response.ok) {
             throw new Error(`Erreur : ${response.status}`);
         }
+
+        alert("Projet supprimé avec succès ! ✅");
     } catch (error) {
         console.error(error);
     }
 }
 
 // Fonction pour supprimer un projet
-async function handleDeleteProject(event, projectId) {
-    event.preventDefault();
+async function handleDeleteProject(projectId) {
     const deletionSuccessful = await deleteProject(projectId, token);
 
     if (deletionSuccessful) {

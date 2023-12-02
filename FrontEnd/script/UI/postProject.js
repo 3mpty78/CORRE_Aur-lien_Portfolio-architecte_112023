@@ -68,6 +68,12 @@ async function postProject(event) {
         if (!response.ok) {
             throw new Error(`Erreur HTTP : ${response.status}`);
         }
+        alert("Projet posté !");
+
+        // Reset des inputs
+        projectName.value = "";
+        projectCategory.value = "Sélectionnez une catégorie";
+        projectPreview.src = "./assets/icons/picture.png";
     } catch (error) {
         console.error("Erreur lors de l'envoie du projet : ", error);
     }

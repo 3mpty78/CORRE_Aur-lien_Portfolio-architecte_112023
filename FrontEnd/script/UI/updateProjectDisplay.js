@@ -25,8 +25,8 @@ function updateProjectsDisplay(
             trashContainer.className = "trashContainer";
             trashContainer.setAttribute("data-project-id", project.id);
 
-            trashIcon.addEventListener("click", (e) => {
-                handleDeleteProject(e, project.id);
+            trashIcon.addEventListener("click", () => {
+                handleDeleteProject(project.id);
             });
 
             trashContainer.appendChild(trashIcon);
