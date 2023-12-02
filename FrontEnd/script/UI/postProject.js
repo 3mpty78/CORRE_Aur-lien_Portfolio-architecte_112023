@@ -3,9 +3,13 @@ const projectName = document.getElementById("title");
 const projectCategory = document.getElementById("category");
 const submitButton = document.getElementById("submitButton");
 const projectPreview = document.getElementById("projectPicture");
+const addButton = document.querySelector(".addFile");
+const imageFormat = document.querySelector(".addContainer p");
 
 addFileInput.addEventListener("change", () => {
     previewImage(addFileInput, projectPreview);
+    addButton.style.display = "none";
+    imageFormat.style.display = "none";
     updateSubmitButtonState();
 });
 
@@ -68,14 +72,18 @@ async function postProject(event) {
         if (!response.ok) {
             throw new Error(`Erreur HTTP : ${response.status}`);
         }
-        alert("Projet posté !");
+        alert("Projet ajouté avec succès ! ✅");
 
         // Reset des inputs
         projectName.value = "";
         projectCategory.value = "Sélectionnez une catégorie";
         projectPreview.src = "./assets/icons/picture.png";
+        addButton.style.display = "block";
+        imageFormat.style.display = "block";
     } catch (error) {
         console.error("Erreur lors de l'envoie du projet : ", error);
+
+        alert("Erreur lors de l'ajout du projet ! ❌");
     }
 }
 

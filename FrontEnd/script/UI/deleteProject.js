@@ -20,6 +20,7 @@ async function deleteProject(projectId, token) {
         alert("Projet supprimé avec succès ! ✅");
     } catch (error) {
         console.error(error);
+        alert("Erreur lors de la suppression du projet ! ❌");
     }
 }
 
