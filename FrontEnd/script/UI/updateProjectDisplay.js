@@ -9,7 +9,7 @@ function updateProjectsDisplay(
 ) {
     const projectsContainer = document.querySelector(containerSelector);
 
-    // Convertissez en tableau si un seul projet est passé
+    // Si un seul projet est passé alors convertir en tableau
     const projects = Array.isArray(projectOrProjects)
         ? projectOrProjects
         : [projectOrProjects];
