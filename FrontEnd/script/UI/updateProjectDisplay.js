@@ -3,14 +3,16 @@ import createProjectFigure from "./createProjectFigure.js";
 import handleDeleteProject from "./deleteProject.js";
 
 function updateProjectsDisplay(
-    projects,
+    projectOrProjects,
     containerSelector,
     addTrashIcon = false
 ) {
     const projectsContainer = document.querySelector(containerSelector);
 
-    // Vider le contenu actuel du conteneur
-    projectsContainer.innerHTML = "";
+    // Convertissez en tableau si un seul projet est passé
+    const projects = Array.isArray(projectOrProjects)
+        ? projectOrProjects
+        : [projectOrProjects];
 
     projects.forEach((project) => {
         const projectFigure = createProjectFigure(project);

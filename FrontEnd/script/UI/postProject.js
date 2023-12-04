@@ -1,3 +1,7 @@
+import fetchProjects from "../script.js";
+import createProjectFigure from "./createProjectFigure.js";
+import updateProjectsDisplay from "./updateProjectDisplay.js";
+
 const addFileInput = document.querySelector("input[type='file']");
 const projectName = document.getElementById("title");
 const projectCategory = document.getElementById("category");
@@ -74,15 +78,28 @@ async function postProject(event) {
         }
         alert("Projet ajouté avec succès ! ✅");
 
-        // Reset des inputs
+        // Ajouter le nouvel élément à la liste existante
+        const newProject = await response.json();
+
+        const projectsContainer = document.querySelector(".gallery");
+
+        // Appel de la fonction pour créer une nouvelle figure
+        const projectFigure = createProjectFigure(newProject);
+        projectsContainer.appendChild(projectFigure);
+
+        updateProjectsDisplay(newProject, ".modalGallery", true);
+
+        // Effacer les champs du formulaire
         projectName.value = "";
-        projectCategory.value = "Sélectionnez une catégorie";
+        projectCategory.value = "";
         projectPreview.src = "./assets/icons/picture.png";
         addButton.style.display = "block";
         imageFormat.style.display = "block";
-    } catch (error) {
-        console.error("Erreur lors de l'envoie du projet : ", error);
 
+        // Désactiver le bouton soumettre après avoir effacé les champs
+        updateSubmitButtonState();
+    } catch (error) {
+        console.error("Erreur lors de l'envoi du projet : ", error);
         alert("Erreur lors de l'ajout du projet ! ❌");
     }
 }

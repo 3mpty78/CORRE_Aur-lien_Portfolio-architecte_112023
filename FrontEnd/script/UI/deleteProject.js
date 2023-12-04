@@ -16,8 +16,6 @@ async function deleteProject(projectId, token) {
         if (!response.ok) {
             throw new Error(`Erreur : ${response.status}`);
         }
-
-        alert("Projet supprimé avec succès ! ✅");
     } catch (error) {
         console.error(error);
         alert("Erreur lors de la suppression du projet ! ❌");
@@ -26,16 +24,17 @@ async function deleteProject(projectId, token) {
 
 // Fonction pour supprimer un projet
 async function handleDeleteProject(projectId) {
-    const deletionSuccessful = await deleteProject(projectId, token);
+    await deleteProject(projectId, token);
 
-    if (deletionSuccessful) {
-        const projectElement = document.querySelector(
-            `[data-project-id="${projectId}"]`
-        );
-        if (projectElement) {
-            projectElement.remove();
-        }
-    }
+    const projectElement = document.querySelectorAll(
+        `[data-project-id="${projectId}"]`
+    );
+
+    projectElement.forEach((project) => {
+        project.remove();
+    });
+
+    alert("Projet supprimé avec succès ! ✅");
 }
 
 export default handleDeleteProject;

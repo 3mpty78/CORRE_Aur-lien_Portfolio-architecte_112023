@@ -2,6 +2,7 @@ import createProjectFigure from "./UI/createProjectFigure.js";
 import updateProjectsDisplay from "./UI/updateProjectDisplay.js";
 import filterProjects from "./UI/buttons.js";
 import postProject from "./UI/postProject.js";
+import handleDeleteProject from "./UI/deleteProject.js";
 
 // Variables globales
 const token = localStorage.getItem("token");
@@ -25,6 +26,8 @@ const fetchProjects = async () => {
     }
 };
 
+export default fetchProjects;
+
 // Fonction principale pour charger et afficher les projets
 const listProjects = async () => {
     const projects = await fetchProjects();
@@ -36,12 +39,7 @@ const listProjects = async () => {
 
 // Fonction pour afficher les projets
 function displayProjects(projects) {
-    const projectsContainer = document.querySelector(".gallery");
-
-    projects.forEach((project) => {
-        const projectFigure = createProjectFigure(project);
-        projectsContainer.appendChild(projectFigure);
-    });
+    updateProjectsDisplay(projects, ".gallery", false);
 }
 
 // Fonction pour mettre à jour l'affichage des projets quand t'es connecté
